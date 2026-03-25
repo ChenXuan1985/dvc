@@ -1,0 +1,79 @@
+# DVC Pipeline Configuration
+# 基于 PyTorch 的机器学习流水线
+
+stages:
+  # 阶段 1: 数据生成
+  generate_data:
+    cmd: python src/generate_data.py --params params.yaml --output-dir data
+    deps:
+      - src/generate_data.py
+      - params.yaml
+    outs:
+      - data/X_raw.npy
+      - data/y_raw.npy
+      - data/data_info.json:
+          cache: false  # 不缓存元数据文件
+
+  # 阶段 2: 数据预处理
+  preprocess:
+    cmd: python src/preprocess.py --params params.yaml --input-dir data --output-dir data
+    deps:
+      - src/preprocess.py
+      - params.yaml
+      - data/X_raw.npy
+      - data/y_raw.npy
+    outs:
+      - data/X_train.npy
+      - data/X_val.npy
+      - data/X_test.npy
+      - data/y_train.npy
+      - data/y_val.npy
+      - data/y_test.npy
+      - data/scaler_params.json:
+          cache: false
+      - data/preprocess_info.json:
+          cache: false
+
+  # 阶段 3: 模型训练
+  train:
+    cmd: python src/train.py --params params.yaml --data-dir data --output-dir models --metrics-dir metrics
+    deps:
+      - src/train.py
+      - params.yaml
+      - data/X_train.npy
+      - data/X_val.npy
+      - data/y_train.npy
+      - data/y_val.npy
+    outs:
+      - models/model.pt
+      - models/checkpoint.pt
+      - models/checkpoint_best.pt
+    metrics:
+      - metrics/train_summary.json:
+          cache: false
+    plots:
+      - metrics/training_history.json:
+          cache: false
+          title: "Training History"
+          x: epoch
+          y:
+            - train_loss
+            - val_loss
+          template: simple
+
+  # 阶段 4: 模型评估
+  evaluate:
+    cmd: python src/evaluate.py --params params.yaml --data-dir data --model-dir models --metrics-dir metrics --reports-dir reports
+    deps:
+      - src/evaluate.py
+      - params.yaml
+      - models/checkpoint_best.pt
+      - data/X_test.npy
+      - data/y_test.npy
+    metrics:
+      - metrics/metrics.json:
+          cache: false
+    plots:
+      - metrics/evaluation_metrics.json:
+          cache: false
+          title: "Evaluation Metrics"

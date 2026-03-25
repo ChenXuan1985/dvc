@@ -1,52 +1,86 @@
+# Python
 __pycache__/
-neatlynx.conf
-.idea
-/cache
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-.env*/
+# Virtual environments
+.env
 .venv
 env/
 venv/
-.python-version
+ENV/
+env.bak/
+venv.bak/
 
-.dvc.conf.lock
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
 .DS_Store
-build/
-dist/
 
-*.egg-info/
-.eggs
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
 
-hooks/*.pyc
+# Data files (managed by DVC)
+*.npy
+*.npz
+*.csv
+*.parquet
+*.h5
+*.hdf5
 
-*.rpm
-*.deb
+# Model files (managed by DVC)
+*.pt
+*.pth
+*.ckpt
+*.h5
 
-innosetup/config.ini
+# DVC
+.dvc/
+.dvcignore
+*.dvc
 
-*.exe
+# Logs and cache
+*.log
+.cache/
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
 
+# Coverage
 .coverage
 .coverage.*
-coverage.xml
-
-*.sw?
-
-pip-wheel-metadata/
-.vscode/
-
-azurite
-env.sh
-tests/remotes_env
-scripts/ci/gcp-creds.json
-.gcp-creds.json
-
-*~
-/dvc/_version.py
-
-.mypy_cache/
-.pytest_cache/
-.nox/
-.tox/
 htmlcov/
+*.cover
+
+# Test outputs
+tests/output/
+tests/tmp/
+
+# Local development
+local/
+tmp/
+temp/
+
+# OS
+Thumbs.db
