@@ -1,3 +1,29 @@
-/tests
-/dvc
-/.github
+# DVC ignore patterns
+# These files will not be tracked by DVC
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# OS files
+.DS_Store
+Thumbs.db

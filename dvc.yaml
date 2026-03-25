@@ -1,0 +1,72 @@
+stages:
+  generate_data:
+    cmd: python src/generate_data.py --params params.yaml
+    deps:
+      - src/generate_data.py
+    params:
+      - data.n_samples
+      - data.n_features
+      - data.n_classes
+      - data.n_informative
+      - data.n_redundant
+      - data.random_state
+    outs:
+      - data/raw/X.npy
+      - data/raw/y.npy
+
+  preprocess:
+    cmd: python src/preprocess.py --params params.yaml
+    deps:
+      - src/preprocess.py
+      - data/raw/X.npy
+      - data/raw/y.npy
+    params:
+      - preprocess.test_size
+      - preprocess.val_size
+      - preprocess.random_state
+      - preprocess.normalize
+    outs:
+      - data/processed/train.pt
+      - data/processed/val.pt
+      - data/processed/test.pt
+
+  train:
+    cmd: python src/train.py --params params.yaml
+    deps:
+      - src/train.py
+      - data/processed/train.pt
+      - data/processed/val.pt
+    params:
+      - train.model.hidden_sizes
+      - train.model.dropout_rate
+      - train.model.activation
+      - train.optimizer.name
+      - train.optimizer.lr
+      - train.optimizer.weight_decay
+      - train.training.epochs
+      - train.training.batch_size
+      - train.training.early_stopping.patience
+      - train.training.early_stopping.min_delta
+      - train.scheduler.name
+      - train.scheduler.factor
+      - train.seed
+    outs:
+      - models/best_model.pt:
+          cache: true
+      - models/training_history.json:
+          cache: false
+
+  evaluate:
+    cmd: python src/evaluate.py --params params.yaml
+    deps:
+      - src/evaluate.py
+      - models/best_model.pt
+      - data/processed/test.pt
+    params:
+      - evaluate.top_k
+    metrics:
+      - metrics/dvc_metrics.json:
+          cache: false
+    outs:
+      - metrics/metrics.json:
+          cache: false

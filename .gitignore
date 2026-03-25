@@ -1,52 +1,62 @@
+# Python
 __pycache__/
-neatlynx.conf
-.idea
-/cache
-*.pyc
-
-.env*/
-.venv
-env/
-venv/
-.python-version
-
-.dvc.conf.lock
-.DS_Store
+*.py[cod]
+*$py.class
+*.so
+.Python
 build/
+develop-eggs/
 dist/
-
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
-.eggs
+.installed.cfg
+*.egg
 
-hooks/*.pyc
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
 
-*.rpm
-*.deb
-
-innosetup/config.ini
-
-*.exe
-
-.coverage
-.coverage.*
-coverage.xml
-
-*.sw?
-
-pip-wheel-metadata/
+# IDE
+.idea/
 .vscode/
-
-azurite
-env.sh
-tests/remotes_env
-scripts/ci/gcp-creds.json
-.gcp-creds.json
-
+*.swp
+*.swo
 *~
-/dvc/_version.py
 
-.mypy_cache/
-.pytest_cache/
-.nox/
-.tox/
-htmlcov/
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Data files (managed by DVC)
+data/raw/*.csv
+data/processed/*.pt
+
+# Model files (managed by DVC)
+models/*.pt
+models/*.pth
+
+# Metrics
+metrics/*.json
+
+# DVC
+.dvc/cache/
+.dvc/tmp/
+.dvc/config.local
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
