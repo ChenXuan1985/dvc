@@ -1,0 +1,36 @@
+# 数据配置
+data:
+  # 数据参数
+  name: "synthetic
+  num_samples: 10000
+  num_features: 20
+  num_classes: 2
+  test_size: 0.2
+  random_state: 42
+  
+  # 预处理参数
+  normalize: true
+  feature_scaling: "standard"
+
+# 模型参数
+model:
+  hidden_layers: [64, 32]
+  dropout: 0.3
+  activation: "relu"
+  
+# 训练参数
+training:
+  batch_size: 32
+  epochs: 50
+  learning_rate: 0.001
+  optimizer: "adam"
+  weight_decay: 1e-5
+  early_stopping:
+    patience: 5
+    min_delta: 0.001
+    monitor: "val_loss"
+
+# 评估参数
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1", "roc_auc", "pr_auc"]
+  top_k: 3

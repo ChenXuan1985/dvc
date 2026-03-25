@@ -1,0 +1,58 @@
+# DVC 流水线定义
+stages:
+  generate_data:
+    cmd: python src/generate_data.py --output data/raw/data.csv
+    deps:
+      - src/generate_data.py
+    params:
+      - params.yaml:
+        - data
+    outs:
+      - data/raw/data.csv
+
+  preprocess:
+    cmd: python src/preprocess.py --input data/raw/data.csv --output data/processed
+    deps:
+      - src/preprocess.py
+      - data/raw/data.csv
+    params:
+      - params.yaml:
+        - data
+    outs:
+      - data/processed
+
+  train:
+    cmd: python src/train.py --data-dir data/processed --model-output models/model.pt --checkpoint-output models/checkpoints
+    deps:
+      - src/train.py
+      - src/model.py
+      - src/dataset.py
+      - data/processed
+    params:
+      - params.yaml:
+        - data
+        - model
+        - training
+    outs:
+      - models/model.pt
+      - models/checkpoints
+    metrics:
+      - logs/train_metrics.json
+
+  evaluate:
+    cmd: python src/evaluate.py --data-dir data/processed --model-path models/model.pt --metrics-output reports/metrics.json
+    deps:
+      - src/evaluate.py
+      - src/model.py
+      - src/dataset.py
+      - data/processed
+      - models/model.pt
+    params:
+      - params.yaml:
+        - data
+        - model
+        - training
+    metrics:
+      - reports/metrics.json
+    outs:
+      - reports/metrics.json

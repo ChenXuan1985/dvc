@@ -1,52 +1,66 @@
-__pycache__/
-neatlynx.conf
-.idea
-/cache
+# DVC 相关
+*.dvc/cache
+*.dvc/tmp
+*.dvc/random
+
+# 数据文件
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# 模型文件
+models/*
+!models/.gitkeep
+
+# 检查点文件
+models/checkpoints/*
+!models/checkpoints/.gitkeep
+
+# 报告和指标
+reports/*
+!reports/.gitkeep
+reports/metrics.json
+
+# 日志
+logs/*
+!logs/.gitkeep
+
+# Python 相关
+__pycache__
 *.pyc
-
-.env*/
-.venv
-env/
-venv/
-.python-version
-
-.dvc.conf.lock
-.DS_Store
-build/
+*.pyo
+*.pyd
+*.egg-info
 dist/
+build/
+*.egg
 
-*.egg-info/
-.eggs
-
-hooks/*.pyc
-
-*.rpm
-*.deb
-
-innosetup/config.ini
-
-*.exe
-
-.coverage
-.coverage.*
-coverage.xml
-
-*.sw?
-
-pip-wheel-metadata/
+# 编辑器
 .vscode/
-
-azurite
-env.sh
-tests/remotes_env
-scripts/ci/gcp-creds.json
-.gcp-creds.json
-
+.idea/
+*.swp
+*.swo
 *~
-/dvc/_version.py
 
-.mypy_cache/
-.pytest_cache/
-.nox/
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 环境
+.env
+.venv
+venv/
+ENV/
+
+# Jupyter
+*.ipynb_checkpoints
+
+# 测试
+.pytest_cache
+.coverage
 .tox/
-htmlcov/
+
+# DVC 临时文件
+*.tmp
+*.lock
